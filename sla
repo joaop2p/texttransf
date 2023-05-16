@@ -1,0 +1,38 @@
+from tkinter import Tk, messagebox
+from tkinter.filedialog import askopenfilename
+import pandas as pd
+def getfistFile():
+    NomeArquivo1 = askopenfilename()
+    df1 = pd.DataFrame(pd.read_excel(NomeArquivo1))
+    return df1
+def getsecfile():
+    NomeArquivo2 = askopenfilename()
+    df2 = pd.DataFrame(pd.read_excel(NomeArquivo2))
+    return df2
+
+
+Tk().withdraw() 
+while True:
+    while True:
+        try:
+            df1 = getfistFile()
+            df1 = df1.applymap(str)
+        except ValueError:
+            messagebox.showerror(title="ERRO", message="Aviso: o arquivo selecionado não está no formato correto")
+            continue
+        break
+    while True:
+        try:
+            df2 = getsecfile()
+            df2 = df2.applymap(str)
+        except ValueError:
+            messagebox.showerror(title="ERRO", message="Aviso: o arquivo selecionado não está no formato correto")
+            continue
+        break
+    try:
+        df = pd.merge(df1, df2, on="UC", how='left')
+        df['NCT_y'] = df['NCT_y'].fillna('NF')
+        lista = df['NCT_y'].tolist()
+    except:
+        break
+    print(df[''])
